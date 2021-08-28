@@ -1,4 +1,5 @@
-5-printf.c
+#include <stdio.h>
+
 /**
  * main - Entry point
  *
