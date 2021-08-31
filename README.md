@@ -1,2 +1,3 @@
 alx-low_level_programming
-# alx-low_level_programmig
+# alx-low_level_programm
+0x02-functions_nested_loops
