@@ -12,8 +12,12 @@ void more_numbers(void)
 {
 	int number, tens, units, row;
 
+<<<<<<< HEAD
 	for (row = 1; row
 	 <= 10; row++)
+=======
+	for (row = 1; row <= 10; row++)
+>>>>>>> fc140b1be112effb5d344f37e4bbf7e9c9c8d8c8
 				{
 	for (number = 0; number <= 14; number++)
 	{
