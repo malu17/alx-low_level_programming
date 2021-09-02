@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 #include "main.h"
-=======
-#include "holberton.h"
->>>>>>> 49ff5591b28e52d75e854c41eb61b36ada1339a5
 
 /**
  * mul - input
