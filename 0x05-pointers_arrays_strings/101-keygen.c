@@ -1,28 +1,30 @@
-#include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 /**
- * main - check the code for Holberton School students.
+ * main - creates a password of sum 2772
  *
- * Return: Always 0.
+ * Return:0;
  */
 int main(void)
 {
-char seed[53] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-char password[22];
-int i, n, passw, complem;
+int keynumber, symbol, checksum;
 
-srand(time(0));
+	srand(time(NULL));
+	checksum = 2772;
+	keynumber = 0;
 
-for (i = 0; passw < 2772; i++)
-{
-n = rand() % 10;
-password[i] = seed[n];
-passw += password[i];
+	while (keynumber < (checksum - 122))
+	{
+		symbol = (rand() % (122 - 97 + 1)) + 97;/*to print mostly lowercaseletters*/
+		printf("%c", symbol);
+		keynumber = keynumber + symbol;
+	}
+
+	symbol = checksum - keynumber;
+	printf("%c", symbol);
+
+	return (0);
 }
-complem = 2772 - passw;
-password[i] = complem;
-printf("%s\n",  password);
-return (0);
-}
+
+
