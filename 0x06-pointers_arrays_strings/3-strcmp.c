@@ -1,4 +1,4 @@
-#include main.h"
+#include "main.h"
 /**
 * _strcmp - compare two strings byte by byte
 * @s1: string one
@@ -22,3 +22,4 @@ int _strcmp(char *s1, char *s2)
 	}
 	return (ret);
 }
+
