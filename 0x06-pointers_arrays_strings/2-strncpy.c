@@ -1,16 +1,24 @@
 #include "main.h"
 /**
- * _strlen - Returns the length of a string
- * @s: pointer type char
- * Return: The program will return the number of characters of *s (the length)
- **/
-int _strlen(char *s)
+* *_strncpy -copies n bytes of an string
+* @src: source
+* @dest: destination
+* @n: number of bytes to copy
+*
+* Return: dest
+**/
+char *_strncpy(char *dest, char *src, int n)
 {
 	int i;
 
-	for (i = 0; s[i] != 00; i++)
+	for (i = 0; i < n && src[i] != 00; i++)
 	{
+		dest[i] = src[i];
 	}
-	return (i);
+	while (i < n)
+	{
+		dest[i] = 00;
+		i++;
+	}
+	return (dest);
 }
-
