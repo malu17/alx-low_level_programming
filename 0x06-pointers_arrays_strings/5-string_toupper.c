@@ -1,4 +1,4 @@
-nclude "mainn.h"
+#include "mainn.h"
 /**
  * *string_toupper - convert string form lowercase to uppercase
  * @s: the string to convert
