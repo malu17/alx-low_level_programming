@@ -1,10 +1,10 @@
-#include "mainn.h"
+#include "main.h"
 /**
- * *string_toupper - convert string form lowercase to uppercase
- * @s: the string to convert
- *
- * Return: the converted to uppercase string
- **/
+* *string_toupper - convert string form lowercase to uppercase
+* @s: the string to convert
+*
+* Return: the converted to uppercase string
+**/
 char *string_toupper(char *s)
 {
 	int i;
