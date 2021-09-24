@@ -1,69 +1,34 @@
-#include <stdlib.h>
-
-char *_memcpy(char *dest, char *src, unsigned int n);
+#include "main.h"
 
 /**
- * _realloc - allocates memory block using malloc and free
- * @ptr: pointer to the memory previosly allocated with malloc
- * @old_size: The size of the allocated space of ptr
- * @new_size: The new size to allocate
- *
- * Description: allocates a new memory block for the pointer,
- * using the contents from the original pointer, copiyng up to the
- * minimum of the old and new sizes.
- * If new_size > old_size, the added memory should not be intialized
- * If new_size == old_size, returns the same pointer
- * If ptr == NULL, call is equivalent to malloc(new_size)
- * If new_size == 0 and ptr != NULL, call is equivalent to free(ptr),
- *  and return NULL.
- *
- * Return: A pointer to the new allocated memory and free ptr.
- * NULL if can not allocate memory
+ * _realloc -   reallocates a memory block using malloc and free.
+ * @ptr: pointer to the memory previusly
+ * @old_size: old size
+ * @new_size: new size
+ * Return: Always 0.
  */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
-	char *p;
+	char *oldptr = ptr, *newp; /* oldptr- desreference newp - memory space */
+	unsigned int i;
 
 	if (new_size == old_size)
-		return (ptr);
-
-	if (new_size == 0 && ptr != NULL)
+		return (oldptr); /* ptr */
+	if (oldptr == NULL)
+	{
+		newp = malloc(new_size);
+		return (newp);
+	}
+	if (new_size == 0)
 	{
 		free(ptr);
 		return (NULL);
 	}
-
-	p = malloc(new_size);
-
-	if (p == NULL)
+	newp = malloc(new_size);
+	if (newp == NULL) /* malloc fails?*/
 		return (NULL);
-
-	if (ptr == NULL)
-		return (p);
-
-	p = _memcpy(p, ptr, (new_size > old_size ? old_size : new_size));
+	for (i = 0; i < old_size && i < new_size; i++) /*check i bound to sizes*/
+		newp[i] = oldptr[i];
 	free(ptr);
-	return (p);
-}
-
-/**
- * _memcpy - copies the memory are from
- * src to dest
- * @dest: The destination pointer
- * @src: The source pointer
- * @n: bytes to use from src
- *
- * Return: The pointer to dest
- */
-char *_memcpy(char *dest, char *src, unsigned int n)
-{
-	unsigned int i = 0;
-
-	while (i < n)
-	{
-		*(dest + i) = *(src + i);
-		i++;
-	}
-
-	return (dest);
+	return (newp);
 }

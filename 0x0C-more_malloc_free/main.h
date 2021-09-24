@@ -1,23 +1,17 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-/* Holberton putchar function */
-int _putchar(char c);
+#include <stdlib.h>
+#include <stddef.h>
+#include <string.h>
+#include <stdio.h>
+#include <limits.h>
 
-/* 0x0C mandatory functions */
+int _putchar(char c);
 void *malloc_checked(unsigned int b);
 char *string_nconcat(char *s1, char *s2, unsigned int n);
 void *_calloc(unsigned int nmemb, unsigned int size);
 int *array_range(int min, int max);
-
-/* 0x0C advanced functions */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
-/* 0x0C backup functions */
-char *_strncat(char *dest, char *src, int n);
-char *_strcpy(char *dest, char *src);
-int _strlen(char *s);
-char *_memset(char *s, char b, unsigned int n);
-int *array_fill(int *arr, int min, int max);
-
-#endif
+#endif /* MAIN_N */
