@@ -1,48 +1,58 @@
-#include <stdlib.h>
 #include "main.h"
+#include <stdlib.h>
 /**
- * _strlen - get length of string.
- * @str: string.
- * Return: length.
- */
-unsigned int _strlen(char *str)
-{
-	unsigned int i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		++i;
-	}
-	return (i);
-}
-/**
- * string_nconcat - concatenates two strings.
- * @s1: strging 1.
- * @s2: string 2.
- * @n: byets of s2 to include.
- * Return: pointer to a string or NULL.
+ * string_nconcat - Concatenate two strings
+ * @s1: string 1
+ * @s2: string 2
+ * @n: unsigned int
+ *Return: returned pointer shall point to a newly allocated space in memory,
+ *which contains s1, followed by the first  *n bytes of s2, and null terminated
+ *If the function fails, it should return NULL
+ *If n is greater or equal to the length of s2 then use the entire string s2
+ *if NULL is passed, treat it as an empty string
  */
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	char *str;
-	unsigned int len1, len2, i, j;
+	unsigned int con, lon1, lon2;
+	char *constr;
 
 	if (s1 == NULL)
 		s1 = "";
 	if (s2 == NULL)
 		s2 = "";
-	len1 = _strlen(s1);
-	len2 = _strlen(s2);
-	if (n >= len2)
-		n = len2;
-	str = malloc(len1 + n + 1 * sizeof(char));
-	if (str == NULL)
+
+	lon1 = _strl(s1);
+	lon2 = _strl(s2);
+
+	if (n > lon2)
+		n = lon2;
+
+	constr = malloc(sizeof(char) * (lon1 + n + 1));
+	if (constr == NULL)
 		return (NULL);
-	for (i = 0; i < len1; ++i)
-		str[i] = s1[i];
-	for (j = 0; j < n; ++j, ++i)
-		str[i] = s2[j];
-	str[i] = '\0';
-	return (str);
+
+	for (con = 0; con < lon1; con++)
+		constr[con] = s1[con];
+
+	for (; con < lon1 + n; con++)
+		constr[con] = s2[con - lon1];
+
+	constr[lon1 + n] = '\0';
+	return (constr);
+}
+
+
+/**
+ * _strl - Return length of string
+ * @s: string
+ * Return: length of the string
+ */
+
+int _strl(char *s)
+{
+	int con;
+
+	for (con = 0; s[con] != '\0'; con++)
+		;
+	return (con);
 }
