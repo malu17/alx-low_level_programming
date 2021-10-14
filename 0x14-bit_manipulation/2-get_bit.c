@@ -1,27 +1,17 @@
-#include "main.h"
+#include "holberton.h"
 
 /**
- * binary_to_uint - converts a binary to unsigned int.
- *
- * @b: pointer to a string.
- *
- * Return: int or 0(fail)
+ * get_bit - value of a bit at a given index
+ * @n: decimal parameter
+ * @index: index
+ * Return: val
  */
 int get_bit(unsigned long int n, unsigned int index)
 {
-	unsigned long int i;
-	
-	if (n & (1 << index))
-	{
-		return (1);
-	}
-	else if (!(n & (1 << index)))
-	{
-		return (0);
-	}
-	else
-	{
-		return (-1);	
-	}
-	
+	int bit;
+
+	bit = (n >> index);
+	if (index > 32)
+	return (-1);
+	return (bit & 1);
 }

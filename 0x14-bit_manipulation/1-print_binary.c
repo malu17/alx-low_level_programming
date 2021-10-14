@@ -1,31 +1,26 @@
-#include "main.h"
+#include "holberton.h"
 
 /**
- * print_binary - convert int to binary and prints it out.
- *
- * @n: pointer to a string.
- *
- * Return: nothing.
+ * print_binary - prints the binary representation of a number
+ * @n: parameter
  */
 void print_binary(unsigned long int n)
 {
-	int i, j;
-	int flag = 0;
+	int i, count = 0;
+	unsigned long int current;
 
-	if (n == 0)
-		_putchar('0');
 	for (i = 63; i >= 0; i--)
 	{
-		j = n >> i;
-		if (j & 1)
+		current = n >> i;
+
+		if (current & 1)
 		{
 			_putchar('1');
-			flag = 1;
+			count++;
 		}
-		else
-		{
-			if (flag == 1)
-				_putchar('0');
-		}
+		else if (count)
+			_putchar('0');
 	}
+	if (!count)
+		_putchar('0');
 }
