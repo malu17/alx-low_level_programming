@@ -1,39 +1,36 @@
-#include "holberton.h"
+#include "main.h"
+
 /**
- * binary_to_uint - convert a binary to decimal
- * @b: binary number as string
- * Return: Decimal equivalent of *b
+ * binary_to_uint - converts a binary to unsigned int.
+ *
+ * @b: pointer to a string.
+ *
+ * Return: int or 0(fail)
  */
 unsigned int binary_to_uint(const char *b)
 {
-	unsigned int cllbck = 0, ld, j;
-	int i = 0;
+	unsigned int decimal = 0;
+	unsigned int multiplayer = 1;
+	int i, j;
 
-	if (b == 0)
-	{
+	if (b == NULL)
 		return (0);
-	}
-	for (i = 0; b[i] != 0; i++)
+	for (i = 0; b[i]; i++)
 	{
-		if (b[i] != '0' && b[i] != '1')
-		{
-			return (0);
-		}
 	}
-	i = i - 1;
 
-	for (j = 0; i >= 0; j++, i--)
+	for (j = i - 1; j >= 0; j--)
 	{
-		if (b[i] == '0')
+		if (b[j] != '1' && b[j] != '0')
+			return (0);
+
+		if (b[j] == '1')
 		{
-			ld = 0;
+			decimal += multiplayer;
 		}
-		else if (b[i] == '1')
-		{
-			ld = 1;
-		}
-		ld = ld << j;
-		cllbck = cllbck | ld;
+
+		multiplayer *= 2;
 	}
-	return (cllbck);
+
+	return (decimal);
 }

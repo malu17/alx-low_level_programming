@@ -1,15 +1,27 @@
-#include "holberton.h"
+#include "main.h"
+
 /**
- * get_bit - returns the value of a bit at a given index
- * @index: index
- * @n: integer
- * Return: bit at index
+ * binary_to_uint - converts a binary to unsigned int.
+ *
+ * @b: pointer to a string.
+ *
+ * Return: int or 0(fail)
  */
 int get_bit(unsigned long int n, unsigned int index)
 {
-	if (index > 63)
+	unsigned long int i;
+	
+	if (n & (1 << index))
 	{
-		return (-1);
+		return (1);
 	}
-	return ((n >> index) & 1);
+	else if (!(n & (1 << index)))
+	{
+		return (0);
+	}
+	else
+	{
+		return (-1);	
+	}
+	
 }
