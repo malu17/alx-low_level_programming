@@ -16,3 +16,4 @@ the project is all about working with bit and manipulaitng it into diffrent numb
 > ### Author 
 ----
 [elias fiseha ](https://github.com/malu17/) 
+asbezah@gmail.com
