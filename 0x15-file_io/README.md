@@ -20,5 +20,5 @@ The project is about working with file management system calls to handle basic f
 
 > ### Author 
 
-[Nahom Terefe](github.com/nahi-terefe) 
+[ELIYAS FISEHA](https://github.com/malu17/) 
 
