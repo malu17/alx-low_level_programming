@@ -1,6 +1,6 @@
 /*
  * File: 8-delete_dnodeint.c
- * Auth: elias fiseha
+ * Auth: eliyas fiseha
  */
 
 #include "lists.h"
