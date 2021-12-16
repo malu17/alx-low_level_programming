@@ -42,4 +42,5 @@ What you should learn from this project:
 ---
 
 ## Author
-* **Diego Monroy** - [diegozencode](https://github.com/diegozencode)
+## enter_blues
+* **elias fiseha** - [malu17](https://github.com/malu17/)
