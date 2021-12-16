@@ -16,3 +16,4 @@ int main(void)
 	hash_table_set(ht, "betty", "holberton");
 	return (EXIT_SUCCESS);
 }
+i
