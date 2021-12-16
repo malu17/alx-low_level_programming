@@ -41,4 +41,3 @@ int main(void)
 	printf("%s:%s\n", "javascript", value);
 	return (EXIT_SUCCESS);
 }
-is
