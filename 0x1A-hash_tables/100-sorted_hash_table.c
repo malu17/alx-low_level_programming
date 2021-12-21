@@ -1,259 +1,166 @@
-#include "hash_tables.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <limits.h>
+#include <string.h>
 
-/**
- * shash_table_create - function that creates an ordered hash table.
- * @size: size of the hash table
- * Return: pointer to the table
- */
+struct entry_s {
+        char *key;
+        char *value;
+        struct entry_s *next;
+};
 
-shash_table_t *shash_table_create(unsigned long int size)
-{
-	shash_table_t *new_table;
+typedef struct entry_s entry_t;
 
-	if (size == 0)
-		return (NULL);
+struct hashtable_s {
+        int size;
+        struct entry_s **table; 
+};
 
-	new_table = calloc(1, sizeof(shash_table_t));
-	if (!new_table)
-		return (NULL);
+typedef struct hashtable_s hashtable_t;
 
-	new_table->size = size;
-	new_table->shead = NULL;
-	new_table->stail = NULL;
-	new_table->array = calloc(size, sizeof(shash_node_t *));
 
-	if (!new_table->array)
-		return (NULL);
+// Create a new hashtable.
+hashtable_t *ht_create( int size ) {
 
-	return (new_table);
+        hashtable_t *hashtable = NULL;
+        int i;
+
+        if( size < 1 ) return NULL;
+
+        // Allocate the table itself.
+        if( ( hashtable = malloc( sizeof( hashtable_t ) ) ) == NULL ) {
+                return NULL;
+        }
+
+        // Allocate pointers to the head nodes.
+        if( ( hashtable->table = malloc( sizeof( entry_t * ) * size ) ) == NULL ) {
+                return NULL;
+        }
+        for( i = 0; i < size; i++ ) {
+                hashtable->table[i] == NULL;
+        }
+
+        hashtable->size = size;
+
+        return hashtable;
 }
 
-/**
- * shash_table_set - function that adds an element to the ordered hash table.
- * @ht: pointer to the hash table structure
- * @key: string to be looked for
- * @value: value of the data
- * Return: 1 on success or 0 on error
- */
-int shash_table_set(shash_table_t *ht, const char *key, const char *value)
-{
-	unsigned long int index;
-	shash_node_t *new_node, *temp;
+// Hash a string for a particular hash table.
+int ht_hash( hashtable_t *hashtable, char *key ) {
 
-	if (!ht || !key || !*key || !value)
-		return (0);
-	index = key_index((const unsigned char *)key, ht->size);
+        unsigned long int hashval;
+        int i = 0;
 
-	temp = ht->array[index];
-	while (temp)
-	{
-		if (!strcmp(temp->key, key))
-		{
-			free(temp->value);
-			temp->value = calloc(strlen(value) + 1, sizeof(char));
-			if (!temp->value)
-				return (0);
-			strcpy(temp->value, value);
-			return (1);
-		}
-		temp = temp->next;
-	}
-	new_node = alloc_new_node(strlen(key), strlen(value));
-	if (!new_node)
-		return (0);
-	strcpy(new_node->key, key), strcpy(new_node->value, value);
+        // Convert our string to an integer
+        while( hashval < ULONG_MAX && i < strlen( key ) ) {
+                hashval = hashval << 8;
+                hashval += key[ i ];
+                i++;
+        }
 
-	if (!ht->array[index])
-		ht->array[index] = new_node;
-	else
-	{
-		new_node->next = ht->array[index], ht->array[index] = new_node;
-	}
-	set_sorted_l(ht, new_node, key);
-	return (1);
-}
-/**
- * set_sorted_l - function that sets the node in the sorted list
- * @ht: pointer to the hash table
- * @new_node: pointer to the node to add
- * @key: key for the sorting
- * Return: void
- */
-
-void set_sorted_l(shash_table_t *ht, shash_node_t *new_node, const char *key)
-{
-	shash_node_t *temp;
-	unsigned int i = 0, flag = 0;
-
-	if (!ht->shead)
-	{
-		ht->shead = new_node, ht->stail = new_node;
-	}
-	else
-	{
-		for (temp = ht->shead; temp; temp = temp->snext)
-		{
-			for (i = 0, flag = 0; key[i]; i++)
-			{
-				if (!temp->key[i] || (key[i] == temp->key[i]))
-					continue;
-				else if (key[i] < temp->key[i])
-				{
-					new_node->sprev = temp->sprev;
-					new_node->snext = temp;
-					if (temp->sprev)
-						temp->sprev->snext = new_node;
-					temp->sprev = new_node, flag++;
-					break;
-				}
-				else
-					break;
-			}
-			if (flag)
-				break;
-		}
-		if (ht->shead->sprev)
-			ht->shead = new_node;
-		if (ht->stail->snext)
-			ht->stail = new_node;
-		if (!temp)
-		{
-			ht->stail->snext = new_node;
-			new_node->sprev = ht->stail, ht->stail = new_node;
-		}
-	}
+        return hashval % hashtable->size;
 }
 
-/**
- * alloc_new_node - function that allocates a new node
- * @length_key: length of key for the node
- * @length_val: length of value of the new data in the node
- * Return: pointer to the new node
- */
+// Create a key-value pair.
+entry_t *ht_newpair( char *key, char *value ) {
+        entry_t *newpair;
 
-shash_node_t *alloc_new_node(size_t length_key, size_t length_val)
-{
-	shash_node_t *new_node;
+        if( ( newpair = malloc( sizeof( entry_t ) ) ) == NULL ) {
+                return NULL;
+        }
 
-	new_node = calloc(1, sizeof(shash_node_t));
-	if (!new_node)
-		return (NULL);
-	new_node->key = calloc(length_key + 1, 1);
-	if (!new_node->key)
-		return (NULL);
-	new_node->value = calloc(length_val + 1, 1);
-	if (!new_node->value)
-		return (NULL);
-	new_node->next = NULL;
-	new_node->sprev = NULL;
-	new_node->snext = NULL;
+        if( ( newpair->key = strdup( key ) ) == NULL ) {
+                return NULL;
+        }
 
-	return (new_node);
+        if( ( newpair->value = strdup( value ) ) == NULL ) {
+                return NULL;
+        }
+
+        newpair->next = NULL;
+
+        return newpair;
 }
 
-/**
- * shash_table_get - function that adds an element to the ordered hash table.
- * @ht: pointer to the hash table structure
- * @key: string to be looked for
- * Return: pointer to the value string
- */
-char *shash_table_get(const shash_table_t *ht, const char *key)
-{
-	unsigned long int index;
-	shash_node_t *temp;
+// Insert a key-value pair into a hash table. 
+void ht_set( hashtable_t *hashtable, char *key, char *value ) {
+        int bin = 0;
+        entry_t *newpair = NULL;
+        entry_t *next = NULL;
+        entry_t *last = NULL;
 
-	if (!ht || !key || !*key)
-		return (NULL);
+        bin = ht_hash( hashtable, key );
 
-	index = key_index((const unsigned char *)key, ht->size);
+        next = hashtable->table[ bin ];
 
-	if (ht->array[index])
-	{
-		temp = ht->array[index];
-		while (temp)
-		{
-			if (!strcmp(temp->key, key))
-				return (temp->value);
-			temp = temp->next;
-		}
-	}
-	return (NULL);
+        while( next != NULL && next->key != NULL && strcmp( key, next->key ) > 0 ) {
+                last = next;
+                next = next->next;
+        }
+
+        // There's already a pair.  Let's replace that string.
+        if( next != NULL && next->key != NULL && strcmp( key, next->key ) == 0 ) {
+
+                free( next->value );
+                next->value = strdup( value );
+
+        // Nope, could't find it.  Time to grow a pair.
+        } else {
+                newpair = ht_newpair( key, value );
+
+                // We're at the start of the linked list in this bin.
+                if( next == hashtable->table[ bin ] ) {
+                        newpair->next = next;
+                        hashtable->table[ bin ] = newpair;
+        
+                // We're at the end of the linked list in this bin.
+                } else if ( next == NULL ) {
+                        last->next = newpair;
+        
+                // We're in the middle of the list.
+                } else  {
+                        newpair->next = next;
+                        last->next = newpair;
+                }
+        }
 }
 
-/**
- * shash_table_print - function that prints the whole hash table, pythonic way
- * @ht: pointer to the hash table structure
- * Return: pointer to the value string
- */
+// Retrieve a key-value pair from a hash table.
+char *ht_get( hashtable_t *hashtable, char *key ) {
+        int bin = 0;
+        entry_t *pair;
 
-void shash_table_print(const shash_table_t *ht)
-{
-	unsigned long int count = 0;
-	shash_node_t *temp;
+        bin = ht_hash( hashtable, key );
 
-	if (!ht)
-		return;
+        // Step through the bin, looking for our value.
+        pair = hashtable->table[ bin ];
+        while( pair != NULL && pair->key != NULL && strcmp( key, pair->key ) > 0 ) {
+                pair = pair->next;
+        }
 
-	printf("{");
-	for (temp = ht->shead; temp; temp = temp->snext)
-	{
-		if (count)
-			printf(", ");
-		printf("\'%s\': \'%s\'", temp->key, temp->value);
-		count++;
-	}
-	printf("}\n");
-}
-/**
- * shash_table_print_rev - function that prints in reverse the hash table.
- * @ht: pointer to the hash table structure
- * Return: pointer to the value string
- */
+        // Did we actually find anything?
+        if( pair == NULL || pair->key == NULL || strcmp( key, pair->key ) != 0 ) {
+                return NULL;
 
-void shash_table_print_rev(const shash_table_t *ht)
-{
-	unsigned long int count = 0;
-	shash_node_t *temp;
-
-	if (!ht)
-		return;
-
-	printf("{");
-	for (temp = ht->stail; temp; temp = temp->sprev)
-	{
-		if (count)
-			printf(", ");
-		printf("\'%s\': \'%s\'", temp->key, temp->value);
-		count++;
-	}
-	printf("}\n");
+        } else {
+                return pair->value;
+        }
+        
 }
 
-/**
- * shash_table_delete - function that deletes the whole hash table.
- * @ht: pointer to the hash table structure
- * Return: void
- */
 
-void shash_table_delete(shash_table_t *ht)
-{
-	shash_node_t *temp, *current;
-	unsigned long int index;
+int main( char *argc, char *argv ) {
 
-	if (!ht)
-		return;
+        hashtable_t *hashtable = ht_create( 65536 );
 
-	for (index = 0; index < ht->size; index++)
-	{
-		temp = ht->array[index];
-		while (temp)
-		{
-			current = temp->next;
-			free(temp->key), free(temp->value);
-			free(temp);
-			temp = current;
-		}
-	}
-	free(ht->array);
-	free(ht);
+        ht_set( hashtable, "key1", "inky" );
+        ht_set( hashtable, "key2", "pinky" );
+        ht_set( hashtable, "key3", "blinky" );
+        ht_set( hashtable, "key4", "floyd" );
+
+        printf( "%s\n", ht_get( hashtable, "key1" ) );
+        printf( "%s\n", ht_get( hashtable, "key2" ) );
+        printf( "%s\n", ht_get( hashtable, "key3" ) );
+        printf( "%s\n", ht_get( hashtable, "key4" ) );
+
 }
