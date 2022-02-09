@@ -1,19 +1,27 @@
 #!/usr/bin/python3
+"""
+module for perimeter of island
+"""
 
 
 def island_perimeter(grid):
-    """Python function to return the perimeter of an island"""
+    """returns the perimeter of the island
+    Args:
+         grid (list) = list of integers
+    """
 
-    p = 0
-    for x in range(len(grid)):
-        for y in range(len(grid[x])):
-            if grid[x][y] == 1:
-                if x + 1 == len(grid) or grid[x + 1][y] == 0:
-                    p += 1
-                if y + 1 == len(grid[0]) or grid[x][y + 1] == 0:
-                    p += 1
-                if x - 1 == -1 or grid[x - 1][y] == 0:
-                    p += 1
-                if y - 1 == -1 or grid[x][y - 1] == 0:
-                    p += 1
-    return(p)
+    width = len(grid[0])
+    height = len(grid)
+    edges = 0
+    size = 0
+
+    for i in range(height):
+        for j in range(width):
+            if grid[i][j] == 1:
+                size += 1
+                # checking for boundery or a lake
+                if (j > 0 and grid[i][j - 1] == 1):
+                    edges += 1
+                if (i > 0 and grid[i - 1][j] == 1):
+                    edges += 1
+    return size * 4 - edges * 2
