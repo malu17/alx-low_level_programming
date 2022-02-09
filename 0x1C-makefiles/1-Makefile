@@ -1,5 +1,5 @@
+#Save in a variables the compiler to be used and files
 CC=gcc
-SRC=holberton.c main.c
-all: holberton
-holberton: $(SRC)
+SRC= main.c holberton.c
+all: $(SRC)
 	$(CC) $(SRC) -o holberton
