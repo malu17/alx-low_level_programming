@@ -1,9 +1,7 @@
-# -*- MakeFile -*-
-
-NAME = holberton
-CC = gcc
-SRC = holberton.c main.c
-OBJ = $(SRC:.c=.o)
-
-all : $(OBJ)
+#Save in a variables the compiler to be used and files
+CC=gcc
+SRC= main.c holberton.c
+OBJ= $(SRC:%.c=%.o)
+NAME= holberton
+all: $(OBJ)
 	$(CC) $(OBJ) -o $(NAME)
