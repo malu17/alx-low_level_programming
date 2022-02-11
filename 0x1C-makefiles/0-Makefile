@@ -1,3 +1,4 @@
-# Instructions for compilation
-all: main.c holberton.c
-	gcc main.c holberton.c -o holberton
+all: compile_school
+
+compile_school:
+	gcc main.c school.c -o school
