@@ -1,5 +1,7 @@
-#Save in a variables the compiler to be used and files
-CC=gcc
-SRC= main.c holberton.c
-all: $(SRC)
-	$(CC) $(SRC) -o holberton
+all: compile_school
+
+CC = gcc
+SRC = main.c school.c
+
+compile_school:
+	${CC} ${SRC} -o school
