@@ -48,12 +48,10 @@ using project-based peer learning. For more information, visit
 [GitHub](https://github.com/malu17)
 (https://www.alx.com/).
 
-* [0x1C. C - Makefiles](./0x1C-makefiles)
-* [0x1D. C - Binary trees](https://github.com/malu17/binary_trees)
-* [0x1E. C - Search Algorithms](./0x1E-search_algorithms)
 
-## :enter_belu: 
-* **elias fiseha** - [malu17](https://github.com/malu17)
+## Authors :black_nib:
+
+ **elias fiseha** - [malu17](https://github.com/malu17)
 
 [![Twitter Follow](https://img.shields.io/twitter/follow/JulianR_30.svg?style=social&label=Follow)](https://twitter.com/eliasfiseha1)
 
