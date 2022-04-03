@@ -45,8 +45,9 @@ All work contained in this project was completed as part of the curriculum for
 alx. alx is a campus-based full-stack software
 engineering program that prepares students for careers in the tech industry
 using project-based peer learning. For more information, visit
-[malu17] (https://www.alx.com/).
-/sorting_algorithms)
+[GitHub](https://github.com/malu17)
+(https://www.alx.com/).
+
 * [0x1C. C - Makefiles](./0x1C-makefiles)
 * [0x1D. C - Binary trees](https://github.com/malu17/binary_trees)
 * [0x1E. C - Search Algorithms](./0x1E-search_algorithms)
